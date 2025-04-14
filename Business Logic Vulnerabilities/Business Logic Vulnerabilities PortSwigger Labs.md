@@ -133,4 +133,4 @@ Location: /cart/order-confirmation?order-confirmed=true
 - **Configure Burp macros to automate process:**
 
 #### Image test
-[[/BSCP/Business Logic Vulnerabilities/Resources/Images/Image test]]
+![image test](https://github.com/MINEGOBLIN/BSCP/blob/main/Business%20Logic%20Vulnerabilities/Resources/Images/Image%20test.png)
