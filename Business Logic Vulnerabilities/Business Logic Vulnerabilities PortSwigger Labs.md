@@ -131,6 +131,31 @@ Location: /cart/order-confirmation?order-confirmed=true
 5. Copy code > My account > Enter gift card code > Redeem
 6. `$3.00` has been gained
 - **Configure Burp macros to automate process:**
-
-#### Image test
-[[/BSCP/Business Logic Vulnerabilities/Resources/Images/Image test]]
+1. Settings > Session > Macros > Add
+2. Select the 5 requests made to complete the gift card purchase and code redeem:
+	1. Add gift card to cart
+	2. Apply discount code in cart
+	3. Complete purchase
+	4. Retrieve gift card code to redeem
+	5. Redeem gift card
+3. Select order confirmation request > Configure item > Add
+4. Define custom parameter > Parameter name = `gift-card` > Select gift card code from HTTP response > OK > OK to close window
+5. Select redeem gift card request > Configure item > Add
+6. Configure gift card parameter > `Derive from prior response` > `Response 4` > OK
+7. Test macro and confirm `gift-card` parameter is unique (perform this twice to be sure)
+8. Check account page and confirm store credit is incrementing
+9. Select OK to close Macro editor
+10. Settings > Session > Session handling rules > Add
+11. Rules actions > Add > Run Macro
+12. Select the macro created in the previous steps > OK 
+13. Scope > URL scope > Use custom scope > Add > Paste GET request on `/my-account?id=wiener`
+14. OK to close
+15. Use repeater tab and send GET request to `/my-account?id=wiener` > Search for `credit` and confirm the credit is incrementing by `$3.00`
+16. Send `/my-account?id=wiener` request to Intruder
+17. Configure Intruder
+	1. Payload type: Null payloads
+	2. Payload configuration: Continue indefinitely
+	3. Resource pool > Create new resource pool > Maximum concurrent requests: 1 > Delay between requests: 100
+	4. Settings > Grep - Extract > Extract the store credit money value e.g. `$50.00`
+18. Start Attack > Review results and confirm credit value is going up
+19. Keep going until you have enough to buy the l33 jacket
