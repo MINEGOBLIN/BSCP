@@ -139,24 +139,42 @@ Location: /cart/order-confirmation?order-confirmed=true
 	3. Complete purchase
 	4. Retrieve gift card code to redeem
 	5. Redeem gift card
+![2](https://github.com/MINEGOBLIN/BSCP/blob/main/Business%20Logic%20Vulnerabilities/Resources/Images/macroRecorder.png)
 3. Select order confirmation request > Configure item > Add
+![3](https://github.com/MINEGOBLIN/BSCP/blob/main/Business%20Logic%20Vulnerabilities/Resources/Images/orderConfirmConfigure.png)
+![4](https://github.com/MINEGOBLIN/BSCP/blob/main/Business%20Logic%20Vulnerabilities/Resources/Images/orderConfirmConfigureMacroItem.png)
 4. Define custom parameter > Parameter name = `gift-card` > Select gift card code from HTTP response > OK > OK to close window
+![5](https://github.com/MINEGOBLIN/BSCP/blob/main/Business%20Logic%20Vulnerabilities/Resources/Images/orderConfirmConfigureDefineCustomParameter.png)
 5. Select redeem gift card request > Configure item > Add
+![6](https://github.com/MINEGOBLIN/BSCP/blob/main/Business%20Logic%20Vulnerabilities/Resources/Images/redeemGiftCardConfigure.png)
 6. Configure gift card parameter > `Derive from prior response` > `Response 4` > OK
+![7](https://github.com/MINEGOBLIN/BSCP/blob/main/Business%20Logic%20Vulnerabilities/Resources/Images/redeemGiftCardConfigureMacroItem.png)
 7. Test macro and confirm `gift-card` parameter is unique (perform this twice to be sure)
+![8](https://github.com/MINEGOBLIN/BSCP/blob/main/Business%20Logic%20Vulnerabilities/Resources/Images/testMacro.png)
+![9](https://github.com/MINEGOBLIN/BSCP/blob/main/Business%20Logic%20Vulnerabilities/Resources/Images/testMacroConfirmation.png)
 8. Check account page and confirm store credit is incrementing
 9. Select OK to close Macro editor
 10. Settings > Session > Session handling rules > Add
+![10](https://github.com/MINEGOBLIN/BSCP/blob/main/Business%20Logic%20Vulnerabilities/Resources/Images/sessionHandlingRulesAdd.png)
 11. Rules actions > Add > Run Macro
+![11](https://github.com/MINEGOBLIN/BSCP/blob/main/Business%20Logic%20Vulnerabilities/Resources/Images/sessionHandlingRulesAdd.png)
 12. Select the macro created in the previous steps > OK 
+![12](https://github.com/MINEGOBLIN/BSCP/blob/main/Business%20Logic%20Vulnerabilities/Resources/Images/sessionHandlingSelectMacro.png)
 13. Scope > URL scope > Use custom scope > Add > Paste GET request on `/my-account?id=wiener`
+![13](https://github.com/MINEGOBLIN/BSCP/blob/main/Business%20Logic%20Vulnerabilities/Resources/Images/sessionHandlingRulesScope.png)
 14. OK to close
 15. Use repeater tab and send GET request to `/my-account?id=wiener` > Search for `credit` and confirm the credit is incrementing by `$3.00`
+[!14](https://github.com/MINEGOBLIN/BSCP/blob/main/Business%20Logic%20Vulnerabilities/Resources/Images/getMyAccountRequest1.png)
+[!15](https://github.com/MINEGOBLIN/BSCP/blob/main/Business%20Logic%20Vulnerabilities/Resources/Images/getMyAccountRequest2.png)
 16. Send `/my-account?id=wiener` request to Intruder
 17. Configure Intruder
 	1. Payload type: Null payloads
 	2. Payload configuration: Continue indefinitely
 	3. Resource pool > Create new resource pool > Maximum concurrent requests: 1 > Delay between requests: 100
 	4. Settings > Grep - Extract > Extract the store credit money value e.g. `$50.00`
+[!16](https://github.com/MINEGOBLIN/BSCP/blob/main/Business%20Logic%20Vulnerabilities/Resources/Images/intruderPayloads.png)
+[!17](https://github.com/MINEGOBLIN/BSCP/blob/main/Business%20Logic%20Vulnerabilities/Resources/Images/intruderResourcePool.png)
+[!18](https://github.com/MINEGOBLIN/BSCP/blob/main/Business%20Logic%20Vulnerabilities/Resources/Images/intruderSettings.png)
 18. Start Attack > Review results and confirm credit value is going up
+[!19](https://github.com/MINEGOBLIN/BSCP/blob/main/Business%20Logic%20Vulnerabilities/Resources/Images/intruderResults.png)
 19. Keep going until you have enough to buy the l33 jacket
