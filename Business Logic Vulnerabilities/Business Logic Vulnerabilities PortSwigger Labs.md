@@ -164,17 +164,17 @@ Location: /cart/order-confirmation?order-confirmed=true
 ![13](https://github.com/MINEGOBLIN/BSCP/blob/main/Business%20Logic%20Vulnerabilities/Resources/Images/sessionHandlingRulesScope.png)
 14. OK to close
 15. Use repeater tab and send GET request to `/my-account?id=wiener` > Search for `credit` and confirm the credit is incrementing by `$3.00`
-[!14](https://github.com/MINEGOBLIN/BSCP/blob/main/Business%20Logic%20Vulnerabilities/Resources/Images/getMyAccountRequest1.png)
-[!15](https://github.com/MINEGOBLIN/BSCP/blob/main/Business%20Logic%20Vulnerabilities/Resources/Images/getMyAccountRequest2.png)
+![14](https://github.com/MINEGOBLIN/BSCP/blob/main/Business%20Logic%20Vulnerabilities/Resources/Images/getMyAccountRequest1.png)
+![15](https://github.com/MINEGOBLIN/BSCP/blob/main/Business%20Logic%20Vulnerabilities/Resources/Images/getMyAccountRequest2.png)
 16. Send `/my-account?id=wiener` request to Intruder
 17. Configure Intruder
 	1. Payload type: Null payloads
 	2. Payload configuration: Continue indefinitely
 	3. Resource pool > Create new resource pool > Maximum concurrent requests: 1 > Delay between requests: 100
 	4. Settings > Grep - Extract > Extract the store credit money value e.g. `$50.00`
-[!16](https://github.com/MINEGOBLIN/BSCP/blob/main/Business%20Logic%20Vulnerabilities/Resources/Images/intruderPayloads.png)
-[!17](https://github.com/MINEGOBLIN/BSCP/blob/main/Business%20Logic%20Vulnerabilities/Resources/Images/intruderResourcePool.png)
-[!18](https://github.com/MINEGOBLIN/BSCP/blob/main/Business%20Logic%20Vulnerabilities/Resources/Images/intruderSettings.png)
+![16](https://github.com/MINEGOBLIN/BSCP/blob/main/Business%20Logic%20Vulnerabilities/Resources/Images/intruderPayloads.png)
+![17](https://github.com/MINEGOBLIN/BSCP/blob/main/Business%20Logic%20Vulnerabilities/Resources/Images/intruderResourcePool.png)
+![18](https://github.com/MINEGOBLIN/BSCP/blob/main/Business%20Logic%20Vulnerabilities/Resources/Images/intruderSettings.png)
 18. Start Attack > Review results and confirm credit value is going up
-[!19](https://github.com/MINEGOBLIN/BSCP/blob/main/Business%20Logic%20Vulnerabilities/Resources/Images/intruderResults.png)
+![19](https://github.com/MINEGOBLIN/BSCP/blob/main/Business%20Logic%20Vulnerabilities/Resources/Images/intruderResults.png)
 19. Keep going until you have enough to buy the l33 jacket
