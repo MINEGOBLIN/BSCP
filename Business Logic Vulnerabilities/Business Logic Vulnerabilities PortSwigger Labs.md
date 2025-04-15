@@ -132,6 +132,7 @@ Location: /cart/order-confirmation?order-confirmed=true
 6. `$3.00` has been gained
 - **Configure Burp macros to automate process:**
 1. Settings > Session > Macros > Add
+![1](https://github.com/MINEGOBLIN/BSCP/blob/main/Business%20Logic%20Vulnerabilities/Resources/Images/addMacro.png)
 2. Select the 5 requests made to complete the gift card purchase and code redeem:
 	1. Add gift card to cart
 	2. Apply discount code in cart
