@@ -177,4 +177,18 @@ Location: /cart/order-confirmation?order-confirmed=true
 ![18](https://github.com/MINEGOBLIN/BSCP/blob/main/Business%20Logic%20Vulnerabilities/Resources/Images/intruderSettings.png)
 18. Start Attack > Review results and confirm credit value is going up
 ![19](https://github.com/MINEGOBLIN/BSCP/blob/main/Business%20Logic%20Vulnerabilities/Resources/Images/intruderResults.png)
-19. Keep going until you have enough to buy the l33 jacket
+19. Keep going until you have enough to buy the l33t jacket
+# Authentication bypass via encryption oracle
+1. Authenticate with "Stay logged in" selected
+2. Generates an encrypted `stay-logged-in` session cookie
+3. Navigate to post and submit comment with incorrect email
+	- This generates a `notification` cookie which is also encrypted using the same method 
+	- Loading post page with this cookie presents the decrypted `notification` cookie output in the HTTP response
+	- This data is controllable via the POST request `email` parameter
+4. Decrypt current `stay-logged-in` cookie and returns a username and Linux timestamp
+```
+wiener:123456890
+```
+5. Submit `administrator:123456890` as a email and confirm notification cookie decrypts to that value
+## To-do
+- I have not figured out how to exploit this, replacing cookie does not work
