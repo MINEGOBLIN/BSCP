@@ -1,8 +1,8 @@
-- [Information disclosure in error messages](#Information disclosure in error messages)
-- [Information disclosure on debug page](#Information disclosure on debug page)
-- [Source code disclosure via backup files](#Source code disclosure via backup files)
-- [Authentication bypass via information disclosure](#Authentication bypass via information disclosure)
-- [Information disclosure in version control history](#Information disclosure in version control history)
+- [Information disclosure in error messages](#Information-disclosure-in-error-messages)
+- [Information disclosure on debug page](#Information-disclosure-on-debug-page)
+- [Source code disclosure via backup files](#Source-code-disclosure-via-backup-files)
+- [Authentication bypass via information disclosure](#Authentication-bypass-via-information-disclosure)
+- [Information disclosure in version control history](#Information-disclosure-in-version-control-history)
 ***
 # Information disclosure in error messages
 1. Navigate to product page
