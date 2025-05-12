@@ -150,7 +150,7 @@ xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
  </svg>
 ```
 - All of this goes into the `form-data; name="avatar";` section
-![xxe-screenshot](/Resources/xxeFileUpload.png)
+![xxe-screenshot](/XXE/Resources/xxeFileUpload.png)
 5. Go back to post
 6. Inspect element > View profile picture with XXE payload > View source and read `hostname` from the upload image
 - **Note:**
