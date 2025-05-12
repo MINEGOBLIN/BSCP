@@ -1,3 +1,12 @@
+# Navigation
+1. [Exploiting XXE using external entities to retrieve files](#exploiting-xxe-using-external-entities-to-retrieve-files)
+2. [Exploiting XXE to perform SSRF attacks](#exploiting-xxe-to-perform-ssrf-attacks)
+3. [Blind XXE with out-of-band interaction](#blind-xxe-with-out-of-band-interaction)
+4. [Blind XXE via XML parameter entities](#blind-xxe-with-out-of-band-interaction-via-xml-parameter-entities)
+5. [Exfiltrating data with a malicious external DTD](#exploiting-blind-xxe-to-exfiltrate-data-using-a-malicious-external-dtd)
+6. [Blind XXE to retrieve data via error messages](#exploiting-blind-xxe-to-retrieve-data-via-error-messages)
+7. [Exploiting XInclude to retrieve files](#exploiting-xinclude-to-retrieve-files)
+8. [XXE via image file upload](#exploiting-xxe-via-image-file-upload)
 # Exploiting XXE using external entities to retrieve files
 - Exploit XXE to retrieve `/etc/passwd` file
 1. View a product and check the stock
