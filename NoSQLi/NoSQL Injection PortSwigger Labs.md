@@ -153,7 +153,7 @@ GET /user/lookup?user=administrator<@urlencode>' && this.password[§0§] == '§a
 {"username":"carlos","password":{"$regex":"^.*"},"$where":"Object.keys(this)[4].match('^.{13}$')"}
 ```
 - TRUE response for 13 indicating the field name is 13 characters long
-8. Use the [fieldName_exfiltration.py](NoSQLi/Resources/resources/fieldName_exfiltration.py) script to extract the field name
+8. Use the [fieldName_exfiltration.py](https://github.com/MINEGOBLIN/BSCP/blob/main/NoSQLi/Resources/fieldName_exfiltration.py) script to extract the field name
 	1. Change the `url` variable to match your lab
 	2. Change the `if len(a) == 13` to match the length of the field that you extracted in your lab
 9. We have extracted the field name to be `resetPwdToken`
@@ -165,7 +165,7 @@ GET /user/lookup?user=administrator<@urlencode>' && this.password[§0§] == '§a
 	- Numbers payload
 	- 0 - 50
 	- Run attack and look for the TRUE response (larger byte size or "Account locked" message in HTTP response)
-11. Use the [fieldNameValue_exfiltration.py](NoSQLi/Resources/resources/fieldNameValue_exfiltration.py) script to extract the value of the `resetPwdToken`
+11. Use the [fieldNameValue_exfiltration.py](https://github.com/MINEGOBLIN/BSCP/blob/main/NoSQLi/Resources/fieldNameValue_exfiltration.py) script to extract the value of the `resetPwdToken`
 	1. Change the `url` variable to match your lab
 	2. Change the `if len(a) == 16` to match the length of the field that you extracted in your lab
 12. With this extracted token navigate to the `/forgot/password` endpoint
