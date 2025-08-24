@@ -1,0 +1,13 @@
+<?php
+
+// Define the secret key and the message
+$secretKey = 'ra8dsottc63z0mrvho1yjihgcn1th7yp'; // Replace with a secure key
+$message = 'YToyOntpOjc7Tzo0NzoiU3ltZm9ueVxDb21wb25lbnRcQ2FjaGVcQWRhcHRlclxUYWdBd2FyZUFkYXB0ZXIiOjI6e3M6NTc6IgBTeW1mb255XENvbXBvbmVudFxDYWNoZVxBZGFwdGVyXFRhZ0F3YXJlQWRhcHRlcgBkZWZlcnJlZCI7YToxOntpOjA7TzozMzoiU3ltZm9ueVxDb21wb25lbnRcQ2FjaGVcQ2FjaGVJdGVtIjoyOntzOjExOiIAKgBwb29sSGFzaCI7aToxO3M6MTI6IgAqAGlubmVySXRlbSI7czozMDoicm0gLXJmIC9ob21lL2Nhcmxvcy9tb3JhbGUudHh0Ijt9fXM6NTM6IgBTeW1mb255XENvbXBvbmVudFxDYWNoZVxBZGFwdGVyXFRhZ0F3YXJlQWRhcHRlcgBwb29sIjtPOjQ0OiJTeW1mb255XENvbXBvbmVudFxDYWNoZVxBZGFwdGVyXFByb3h5QWRhcHRlciI6Mjp7czo1NDoiAFN5bWZvbnlcQ29tcG9uZW50XENhY2hlXEFkYXB0ZXJcUHJveHlBZGFwdGVyAHBvb2xIYXNoIjtpOjE7czo1ODoiAFN5bWZvbnlcQ29tcG9uZW50XENhY2hlXEFkYXB0ZXJcUHJveHlBZGFwdGVyAHNldElubmVySXRlbSI7czo0OiJleGVjIjt9fWk6NztpOjc7fQ==';
+
+// Generate HMAC-SHA1 hash
+$hmacSha1 = hash_hmac('sha1', $message, $secretKey);
+
+// Output the generated HMAC-SHA1 hash
+echo 'HMAC-SHA1: ' . $hmacSha1;
+
+?>
