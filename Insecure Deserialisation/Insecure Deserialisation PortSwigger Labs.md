@@ -232,7 +232,7 @@ index.rb:13:in `load&apos;: marshal data too short (ArgumentError)
 # puts payload.inspect
 # puts Marshal.load(payload)
 require "base64"
-puts base64.encode64(payload)
+puts Base64.encode64(payload)
 ```
 7. Replace the command `id` with `sleep 5` on line 18
 8. Run the compiler and copy the base64 output
